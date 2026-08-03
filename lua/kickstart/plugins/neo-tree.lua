@@ -22,6 +22,7 @@ return {
       position = 'right',
     },
     filesystem = {
+      hijack_netrw_behavior = 'disabled',
       window = {
         mappings = {
           ['\\'] = 'close_window',

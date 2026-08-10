@@ -30,4 +30,56 @@ return {
       })
     end,
   },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        theme = 'oasis',
+        icons_enabled = true,
+        component_separators = '',
+        section_separators = '',
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = {
+          {
+            function()
+              local root = vim.fs.root(0, '.git')
+              return root and vim.fn.fnamemodify(root, ':t') or ''
+            end,
+            icon = '',
+            color = { fg = require('oasis.palette').terminal.magenta, gui = 'bold' },
+            padding = { left = 0, right = 0 },
+          },
+          'branch',
+          'diff',
+          'diagnostics',
+        },
+        lualine_c = {
+          { 'filetype', icon_only = true, separator = '', padding = { left = 1, right = 0 } },
+          { 'filename', path = 1 },
+        },
+        lualine_x = {
+          {
+            function()
+              local tools = {}
+              for _, client in ipairs(vim.lsp.get_clients { bufnr = 0 }) do
+                tools[#tools + 1] = client.name
+              end
+              local ok, lint = pcall(require, 'lint')
+              if ok then
+                for _, linter in ipairs(lint.linters_by_ft[vim.bo.filetype] or {}) do
+                  tools[#tools + 1] = linter
+                end
+              end
+              return #tools > 0 and (' ' .. table.concat(tools, ',')) or ''
+            end,
+          },
+        },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
+      },
+    },
+  },
 }

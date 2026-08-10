@@ -397,12 +397,16 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
+        defaults = {
+          path_display = { 'truncate' },
+          layout_strategy = 'horizontal',
+          layout_config = {
+            width = 0.98,
+            height = 0.98,
+            preview_width = 0.55,
+          },
+        },
+        pickers = {},
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
         },
@@ -419,7 +423,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set(
         'n',
-        '<leader>sE',
+        '<leader>se',
         function()
           builtin.find_files {
             hidden = true,

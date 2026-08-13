@@ -194,6 +194,11 @@ vim.keymap.set('n', '<leader>yf', function()
   vim.notify('Yanked: ' .. path)
 end, { desc = '[Y]ank [F]ile path' })
 
+vim.keymap.set('n', '<leader>gm', '<cmd>DiffviewOpen<cr>', { desc = '[G]it [M]erge editor' })
+vim.keymap.set('n', '<leader>gc', '<cmd>DiffviewClose<cr>', { desc = '[G]it diffview [C]lose' })
+vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', { desc = '[G]it file [H]istory' })
+vim.keymap.set('n', '<leader>gr', '<cmd>DiffviewFileHistory<cr>', { desc = '[G]it [R]epo history' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.

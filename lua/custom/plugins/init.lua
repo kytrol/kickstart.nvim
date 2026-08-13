@@ -82,4 +82,18 @@ return {
       },
     },
   },
+  {
+    'dlyongemallo/diffview-plus.nvim',
+    version = '*',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewDiffFiles', 'DiffviewMergeFiles', 'DiffviewDiffDirs' },
+    opts = {
+      view = {
+        merge_tool = {
+          layout = 'diff3_mixed',
+        },
+      },
+    },
+    config = function(_, opts) require('diffview').setup(opts) end,
+  },
 }

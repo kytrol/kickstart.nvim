@@ -94,6 +94,27 @@ return {
         },
       },
     },
-    config = function(_, opts) require('diffview').setup(opts) end,
+    config = function(_, opts)
+      require('diffview').setup(opts)
+
+      -- Workaround for `$`-prefixed filenames failing to expand
+      local PathLib = require('diffview.path').PathLib
+      PathLib.expand = function(self, path)
+        local segments = self:explode(path)
+        local idx = 1
+        if segments[1] == '~' then
+          segments[1] = vim.uv.os_homedir()
+          idx = 2
+        end
+        for i = idx, #segments do
+          local env_var = segments[i]:match '^%$(%S+)$'
+          if env_var then
+            local value = os.getenv(env_var)
+            if value ~= nil then segments[i] = value end
+          end
+        end
+        return self:join((table.unpack or unpack)(segments))
+      end
+    end,
   },
 }

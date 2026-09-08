@@ -240,6 +240,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.hl.on_yank() end,
 })
 
+vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter', 'WinNew' }, {
+  desc = 'Restore whitespace characters outside diff windows',
+  group = vim.api.nvim_create_augroup('diff-nolist', { clear = true }),
+  callback = function() vim.wo.list = not (vim.wo.diff or vim.bo.buftype ~= '') end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'

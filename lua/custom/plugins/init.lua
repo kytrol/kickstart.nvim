@@ -93,6 +93,15 @@ return {
           layout = 'diff3_mixed',
         },
       },
+      hooks = {
+        -- Reset by the diff-nolist autocmd in init.lua
+        diff_buf_win_enter = function(_, winid)
+          vim.api.nvim_win_call(winid, function()
+            vim.opt_local.list = false
+            vim.opt_local.fillchars:append { diff = ' ' }
+          end)
+        end,
+      },
     },
     config = function(_, opts)
       require('diffview').setup(opts)

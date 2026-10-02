@@ -194,6 +194,14 @@ vim.keymap.set('n', '<leader>yf', function()
   vim.notify('Yanked: ' .. path)
 end, { desc = '[Y]ank [F]ile path' })
 
+vim.keymap.set('n', '<leader>lr', function()
+  for _, client in ipairs(vim.lsp.get_clients { bufnr = 0 }) do
+    client:stop()
+  end
+
+  vim.cmd 'edit'
+end, { desc = '[L]SP [R]estart' })
+
 vim.keymap.set('n', '<leader>gm', '<cmd>DiffviewOpen<cr>', { desc = '[G]it [M]erge editor' })
 vim.keymap.set('n', '<leader>gc', '<cmd>DiffviewClose<cr>', { desc = '[G]it diffview [C]lose' })
 vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', { desc = '[G]it file [H]istory' })
